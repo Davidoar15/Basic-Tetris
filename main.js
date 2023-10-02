@@ -1,4 +1,10 @@
 import './style.css'
+import { 
+  BLOCK_SIZE, 
+  BOARD_WIDTH, 
+  BOARD_HEIGHT,
+  MOVESET
+} from './consts.js';
 
 // ? Score
 let score = 0;
@@ -8,10 +14,7 @@ let score = 0;
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 const $score = document.querySelector('span');
-
-const BLOCK_SIZE = 20;
-const BOARD_WIDTH = 14;
-const BOARD_HEIGHT = 30;
+const $section = document.querySelector('section');
 
 canvas.width = BLOCK_SIZE * BOARD_WIDTH;
 canvas.height = BLOCK_SIZE * BOARD_HEIGHT;
@@ -115,21 +118,21 @@ function draw() {
 // * Move
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowLeft') {
+  if (event.key === MOVESET.LEFT) {
     piece.position.x--
     if (checkCollision()) {
       piece.position.x++
     };
   };
 
-  if (event.key === 'ArrowRight') {
+  if (event.key === MOVESET.RIGHT) {
     piece.position.x++
     if (checkCollision()) {
       piece.position.x--
     };
   };
 
-  if (event.key === 'ArrowDown') {
+  if (event.key === MOVESET.DOWN) {
     piece.position.y++
     if (checkCollision()) {
       piece.position.y--
@@ -138,7 +141,7 @@ document.addEventListener('keydown', (event) => {
     };
   };
 
-  if (event.key === 'ArrowUp') {
+  if (event.key === MOVESET.UP) {
     const rotated = [];
 
     for (let i = 0; i < piece.shape[0].length; i++) {
@@ -216,5 +219,14 @@ function removeRows() {
     score += 14;
   });
 };
+
+$section.addEventListener('click', () => {
+  update();
+  $section.remove();
+
+  const audio = new Audio('./audio/tetris.mp3');
+  audio.volume = 0.3;
+  audio.play();
+});
 
 update();
