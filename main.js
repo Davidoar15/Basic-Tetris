@@ -49,7 +49,7 @@ const board = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1]
 ];
 
-// * Tetris Piece
+// * Tetris Piece (block)
 
 const piece = {
   position: { x: 5, y: 5 },
@@ -58,6 +58,31 @@ const piece = {
     [1, 1]
   ]
 };
+
+// * Random Pieces
+
+const PIECES = [
+  [
+    [1, 1],
+    [1, 1]
+  ],
+  [
+    [1, 1, 1, 1]
+  ],
+  [
+    [0, 1, 0],
+    [1, 1, 1]   
+  ],
+  [
+    [1, 1, 0],
+    [0, 1, 1]
+  ],
+  [
+    [1, 0],
+    [1, 0],
+    [1, 1]
+  ],
+]
 
 // ? Game Loop
 // * Auto Drop
@@ -159,6 +184,10 @@ function solidifyPiece() {
     });
   });
 
+  // Get Random Piece
+  piece.shape = PIECES[Math.floor(Math.random() * PIECES.length)]
+
+  // Reset Position
   piece.position.x = 0;
   piece.position.y = 0;
 };
