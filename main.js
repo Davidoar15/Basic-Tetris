@@ -51,6 +51,14 @@ const board = [
 
 // * Tetris Piece
 
+const piece = {
+  position: { x: 5, y: 5 },
+  shape: [
+    [1, 1],
+    [1, 1]
+  ]
+};
+
 // * Game Loop
 
 function update() {
@@ -68,8 +76,23 @@ function draw() {
         context.fillStyle = 'yellow';
         context.fillRect(x, y, 1, 1);
       }
-    })
+    });
+  });
+
+  piece.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value) {
+        context.fillStyle = "red";
+        context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
+      }
+    });
   });
 };
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') piece.position.x--
+  if (event.key === 'ArrowRight') piece.position.x++
+  if (event.key === 'ArrowDown') piece.position.y++
+});
 
 update();
