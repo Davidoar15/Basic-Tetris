@@ -1,9 +1,13 @@
 import './style.css'
 
+// ? Score
+let score = 0;
+
 // * Initialize Canvas
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
+const $score = document.querySelector('span');
 
 const BLOCK_SIZE = 20;
 const BOARD_WIDTH = 14;
@@ -131,6 +135,8 @@ function draw() {
       }
     });
   });
+
+  $score.innerText = score;
 };
 
 // * Move
@@ -215,6 +221,7 @@ function solidifyPiece() {
   if (checkCollision()) {
     window.alert("Game Over!");
     board.forEach((row) => row.fill(0));
+    score = 0;
   };
 };
 
@@ -233,6 +240,7 @@ function removeRows() {
     board.splice(y, 1)
     const newRow = Array(BOARD_WIDTH).fill(0);
     board.unshift(newRow);
+    score += 14;
   });
 };
 
