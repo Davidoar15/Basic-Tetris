@@ -61,10 +61,14 @@ const piece = {
 
 // * Game Loop
 
-function update() {
-  draw();
-  window.requestAnimationFrame(update);
-};
+// function update() {
+//   draw();
+//   window.requestAnimationFrame(update);
+// };
+
+// * Auto Drop
+
+
 
 function draw() {
   context.fillStyle = "#000"
@@ -111,6 +115,7 @@ document.addEventListener('keydown', (event) => {
     if (checkCollision()) {
       piece.position.y--
       solidifyPiece();
+      removeRows();
     };
   };
 });
@@ -141,6 +146,24 @@ function solidifyPiece() {
 
   piece.position.x = 0;
   piece.position.y = 0;
+};
+
+// * Remove Rows
+
+function removeRows() {
+  const rowsToRemove = [];
+
+  board.forEach((row, y) => {
+    if (row.every(value => value === 1)) {
+      rowsToRemove.push(y);
+    };
+  });
+
+  rowsToRemove.forEach((y) => {
+    board.splice(y, 1)
+    const newRow = Array(BOARD_WIDTH).fill(0);
+    board.unshift(newRow);
+  });
 };
 
 update();
